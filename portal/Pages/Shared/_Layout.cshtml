@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"] - Web Hacking Portal</title>
+    <link rel="stylesheet" href="~/css/terminal.css" />
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>💀 Web Hacking Portal</h1>
+            <nav>
+                <a href="/">Home</a> | 
+                <a href="/Labs">Labs</a> | 
+                <a href="/Scoreboard">Leaderboard</a>
+            </nav>
+        </header>
+
+        @RenderBody()
+
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Web Hacking Portal</p>
+        </footer>
+    </div>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
