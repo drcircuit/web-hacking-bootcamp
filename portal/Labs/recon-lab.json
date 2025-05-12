@@ -1,0 +1,35 @@
+{
+    "Id": 1,
+    "Title": "Reconnaissance Lab",
+    "Description": "Learn how to gather intelligence using reconnaissance techniques.",
+    "Category": "OWASP A01-Broken Access Control",
+    "Challenges": [
+      {
+        "Id": 1,
+        "Title": "Find Open Ports",
+        "Description": "Use nmap to find open ports on the target.",
+        "Category": "Reconnaissance",
+        "Points": 10,
+        "Flag": "22,80",
+        "Order": 1
+      },
+      {
+        "Id": 2,
+        "Title": "Locate Admin File",
+        "Description": "Where was the admin password backup located?",
+        "Category": "Reconnaissance",
+        "Points": 20,
+        "Flag": "/admin.old",
+        "Order": 2
+      },
+      {
+        "Id": 3,
+        "Title": "Database Password",
+        "Description": "What is the database password from admin.old?",
+        "Category": "Reconnaissance",
+        "Points": 25,
+        "Flag": "Invincible",
+        "Order": 3
+      }
+    ]
+  }
