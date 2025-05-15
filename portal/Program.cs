@@ -30,6 +30,11 @@ builder.Services.AddAuthentication("Cookie").AddCookie(options =>
 builder.Services.AddHttpContextAccessor(); // Needed if AuthService uses IHttpContextAccessor
 var app = builder.Build();
 
+// ✅ Run migrations on startup
+using var scope = app.Services.CreateScope();
+var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+await dbContext.Database.MigrateAsync(); // This creates the DB and applies migrations
+
 // Middleware
 app.UseHttpsRedirection();
 app.UseStaticFiles();
