@@ -45,3 +45,101 @@ button:hover {
     background-color: #0f0;
     color: #000;
 }
+
+/* Terminal-style lab cards */
+.lab-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.lab-card {
+    background-color: #111;
+    border: 1px solid #0f0;
+    padding: 1rem;
+    border-radius: 4px;
+    color: #0f0;
+}
+
+.lab-card h3 {
+    margin-top: 0;
+    color: #0ff;
+}
+
+.lab-card p {
+    margin-bottom: 0.5rem;
+}
+
+.btn, .btn:link, .btn:visited {
+    color: #ff0;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+.btn:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+/* Challenge form styles */
+.challenge {
+    border-top: 1px dashed #0f0;
+    padding-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+input[type="text"] {
+    width: 100%;
+    max-width: 400px;
+    margin-top: 5px;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+/* Submission button */
+form button[type="submit"] {
+    margin-top: 10px;
+}
+.challenge {
+    border: 1px solid #0f0;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: #111;
+}
+
+.challenge h3 {
+    color: #0ff;
+    margin-top: 0;
+}
+
+.challenge label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.challenge input[type="text"] {
+    width: 100%;
+    max-width: 400px;
+    font-size: 1em;
+}
+
+.challenge hr {
+    border-color: #0f0;
+    margin: 1rem 0;
+}
+
+.challenge-card {
+    border: 1px dashed #0f0;
+    padding: 1rem;
+    font-family: monospace;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.challenge-card:hover {
+    background-color: #0f0;
+    color: #000 !important;
+}

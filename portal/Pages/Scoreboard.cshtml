@@ -1,0 +1,35 @@
+@page
+@model WebHackingPortal.Pages.ScoreboardModel
+@{
+    ViewData["Title"] = "Scoreboard";
+}
+
+<h2>💀 Scoreboard</h2>
+
+@if (Model.Labs.Count > 0)
+{
+    <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem;">
+        @foreach (var lab in Model.Labs)
+        {
+            foreach (var challenge in lab.Challenges.OrderBy(c => c.Order))
+            {
+                var key = $"lab{lab.Id}-challenge{challenge.Id}";
+                var isSolved = Model.SolvedChallenges.TryGetValue(key, out var solved) && solved;
+
+                <div class="challenge-card" style="background-color: @(isSolved ? "#0f0" : "#222"); color: @(isSolved ? "#000" : "#fff"); padding: 1rem; border: 1px solid #0f0;">
+                    <strong>@challenge.Title</strong><br />
+                    <small>@lab.Title</small><br />
+                    <small>Points: @challenge.Points</small>
+                </div>
+            }
+        }
+    </div>
+    <div style="margin-top: 2rem; font-size: 1.2rem;">
+    <strong>Total Points:</strong> @Model.TotalPoints<br />
+    <strong>Solved:</strong> @Model.SolvedPoints
+</div>
+}
+else
+{
+    <p>No labs found.</p>
+}

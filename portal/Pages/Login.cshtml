@@ -1,0 +1,23 @@
+@page
+@model WebHackingPortal.Pages.LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h2>Welcome to the Bootcamp</h2>
+
+@if (Model.ShowUsernameForm)
+{
+    <form method="post" asp-page="/Login">
+        <label for="username">Choose your username:</label>
+        <input type="text" id="username" name="username" required />
+        <button type="submit">Continue</button>
+    </form>
+}
+else
+{
+    <p>Logging in as <strong>@Model.CurrentUser?.Username</strong>...</p>
+    <form method="post">
+        <button type="submit" name="action" value="change">Change Username</button>
+    </form>
+}

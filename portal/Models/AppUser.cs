@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace WebHackingPortal.Models
 {
@@ -10,8 +11,7 @@ namespace WebHackingPortal.Models
         [Required]
         [StringLength(50)]
         public string Username { get; set; } = string.Empty;
-
-        [Required]
-        public string PasswordHash { get; set; } = string.Empty;
+        
+        public ICollection<Submission> Submissions { get; set; } = new List<Submission>();
     }
 }

@@ -1,18 +1,55 @@
+@using Microsoft.AspNetCore.Http
+@using WebHackingPortal.Models
+@using Microsoft.Extensions.Logging
+@inject WebHackingPortal.Data.AppDbContext _db
+// inject logger
+@inject Microsoft.Extensions.Logging.ILogger<object> _logger
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <title>@ViewData["Title"] - Web Hacking Portal</title>
     <link rel="stylesheet" href="~/css/terminal.css" />
 </head>
+
 <body>
     <div class="container">
         <header>
             <h1>💀 Web Hacking Portal</h1>
             <nav>
-                <a href="/">Home</a> | 
-                <a href="/Labs">Labs</a> | 
-                <a href="/Scoreboard">Leaderboard</a>
+                <a href="/">Home</a> |
+                <a href="/Labs">Labs</a> |
+                <a href="/Scoreboard">Scoreboard</a> |
+
+                @{
+                    string? userIdStr = Context.Session.GetString("userId");
+                    _logger.LogInformation("User ID from session: {UserId}", userIdStr);
+                    if (!string.IsNullOrEmpty(userIdStr) && Int32.TryParse(userIdStr, out var userId))
+                    {
+                        var user = await _db.Users.FindAsync(userId);
+                        _logger.LogInformation("User ID parsed: {UserId}", userId);
+
+                        if (user != null)
+                        {
+                            _logger.LogInformation("User found: {User}", user.Username);
+
+                            <text>
+                                Logged in as: <strong>@user.Username</strong> |
+                                <a href="/Login?action=change">Change</a> |
+                                <a href="/Logout">Log Out</a>
+                            </text>
+                        } else {
+                            _logger.LogWarning("User not found in database: {UserId}", userId);
+                            
+                        }
+                    }
+                    else
+                    {
+                        _logger.LogInformation("User not logged in.");
+                        <a href="/Login">Log In</a>
+                    }
+                }
             </nav>
         </header>
 
@@ -25,4 +62,5 @@
 
     @RenderSection("Scripts", required: false)
 </body>
+
 </html>

@@ -1,0 +1,64 @@
+@page "{id}"
+@model WebHackingPortal.Pages.Labs.Lab.IndexModel
+@{
+    ViewData["Title"] = Model.Lab?.Title ?? "Lab";
+}
+
+@if (Model.Lab != null)
+{
+    <h2>@Model.Lab.Title</h2>
+    <p>@Model.Lab.Description</p>
+
+    var progress = Model.TotalChallenges > 0
+    ? (int)((double)Model.SolvedCount / Model.TotalChallenges * 100)
+    : 0;
+
+    <div style="margin: 1rem 0;">
+        <strong>Progress:</strong>
+        <div style="width: 100%; background-color: #444; height: 20px; border-radius: 1px; overflow: hidden;">
+            <div style="width: @progress%; background-color: lime; height: 100%;"></div>
+        </div>
+        <small>@Model.SolvedCount / @Model.TotalChallenges challenges solved</small>
+    </div>
+
+    @foreach (var challenge in Model.Lab.Challenges.OrderBy(c => c.Order))
+    {
+        <div class="challenge">
+            <form method="post">
+
+                <h3>Challenge @(challenge.Order): @challenge.Title</h3>
+                <p>@challenge.Description</p>
+
+                <input type="hidden" name="id" value="@Model.Lab.Id" />
+                <input type="hidden" name="challengeId" value="@challenge.Id" />
+
+                @{
+                    var isSolved = Model.SolvedChallenges.Contains((Model.Lab.Id, challenge.Id));
+                    var attemptCount = Model.ChallengeAttempts.GetValueOrDefault(challenge.Id, 0);
+                }
+
+                <label for="flag_@challenge.Id">Flag:</label>
+                <input type="text" id="flag_@challenge.Id" name="flag" placeholder="WCH{...}" disabled="@isSolved" />
+
+                <button type="submit" disabled="@isSolved">Submit</button>
+
+                @if (attemptCount > 0)
+                {
+                    <small style="color: gray;">Attempts: @attemptCount</small>
+                }
+
+                @if (isSolved)
+                {
+                    <span style="color: lime; margin-left: 10px;">✅ Solved</span>
+                }
+
+                <hr />
+            </form>
+
+        </div>
+    }
+}
+else
+{
+    <p>Lab not found.</p>
+}

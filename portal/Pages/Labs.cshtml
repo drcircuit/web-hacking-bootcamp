@@ -1,0 +1,25 @@
+@page
+@model WebHackingPortal.Pages.LabsModel
+@{
+    ViewData["Title"] = "Labs";
+}
+
+<h2>Available Labs</h2>
+
+@if (Model.Labs.Any())
+{
+    <div class="lab-list">
+        @foreach (var lab in Model.Labs)
+        {
+            <div class="lab-card">
+                <h3>@lab.Title</h3>
+                <p>@lab.Description</p>
+                <a href="/Labs/Lab/@lab.Id" class="btn">Start Lab →</a>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>No labs found. Please check the Labs folder.</p>
+}
