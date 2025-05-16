@@ -5,15 +5,14 @@ networks:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.24.0.0/16
+        - subnet: 172.99.0.0/16  # Changed to a fresh subnet
 
 services:
   nginx-proxy:
     image: nginx:latest
     container_name: evilcorp-router
     networks:
-      evilcorp_net:
-        ipv4_address: 172.24.0.1
+      - evilcorp_net
     ports:
       - "80:80"
     volumes:
@@ -26,8 +25,7 @@ services:
       dockerfile: Dockerfile
     container_name: bootcamp-portal
     networks:
-      evilcorp_net:
-        ipv4_address: 172.24.0.10
+      - evilcorp_net
     restart: unless-stopped
 
   lab1-recon-target:
@@ -36,16 +34,14 @@ services:
       dockerfile: dockerfile
     container_name: lab1-recon-box
     networks:
-      evilcorp_net:
-        ipv4_address: 172.24.0.11
+      - evilcorp_net
     restart: unless-stopped
 
   attacker-box:
-    image: kalilinux/kali-linux-docker
+    image: kalilinux/kali-rolling
     container_name: attacker-box
     networks:
-      evilcorp_net:
-        ipv4_address: 172.24.0.20
+      - evilcorp_net
     stdin_open: true
     tty: true
     restart: unless-stopped
