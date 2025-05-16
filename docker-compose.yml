@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  bootcamp-portal:
+    build:
+      context: .
+      dockerfile: portal/Dockerfile
+    container_name: bootcamp-portal
+    ports:
+      - "80:80"
+    networks:
+      bootcamp_net:
+        ipv4_address: 172.30.0.10
+
+  lab1-recon-target:
+    build:
+      context: .
+      dockerfile: labs/lab-1-recon/dockerfile
+    container_name: lab1-recon-box
+    ports:
+      - "80:80"
+      - "22:22"
+    networks:
+      lab1_net:
+        ipv4_address: 172.20.0.10
+
+networks:
+  bootcamp_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.0.0/24
+  lab1_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
