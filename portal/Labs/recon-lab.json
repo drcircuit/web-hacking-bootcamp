@@ -1,35 +1,80 @@
 {
-    "Id": 1,
-    "Title": "Reconnaissance Lab",
-    "Description": "Learn how to gather intelligence using reconnaissance techniques.",
-    "Category": "OWASP A01-Broken Access Control",
-    "Challenges": [
-      {
-        "Id": 1,
-        "Title": "Find Open Ports",
-        "Description": "Use nmap to find open ports on the target.",
-        "Category": "Reconnaissance",
-        "Points": 10,
-        "Flag": "22,80",
-        "Order": 1
-      },
-      {
-        "Id": 2,
-        "Title": "Locate Admin File",
-        "Description": "Where was the admin password backup located?",
-        "Category": "Reconnaissance",
-        "Points": 20,
-        "Flag": "/admin.old",
-        "Order": 2
-      },
-      {
-        "Id": 3,
-        "Title": "Database Password",
-        "Description": "What is the database password from admin.old?",
-        "Category": "Reconnaissance",
-        "Points": 25,
-        "Flag": "Invincible",
-        "Order": 3
-      }
-    ]
-  }
+  "Id": 1,
+  "Title": "Reconnaissance Lab – Breaching Evil Corp",
+  "Description": "Start with passive recon. No exploits yet — just observation.",
+  "Category": "Intro",
+  "Challenges": [
+    {
+      "Id": 1,
+      "Title": "Step 1: Surface Scan",
+      "Description": "Begin your recon from the surface. Ignore native services local to your system.",
+      "Category": "Reconnaissance",
+      "Points": 10,
+      "Flag": "22,80",
+      "Order": 1
+    },
+    {
+      "Id": 2,
+      "Title": "Step 2: Fingerprint",
+      "Description": "Look closer at what's running.",
+      "Category": "Reconnaissance",
+      "Points": 10,
+      "Flag": "Apache/2.4.29 (Ubuntu)",
+      "Order": 2
+    },
+    {
+      "Id": 3,
+      "Title": "Step 3: Hidden stuff",
+      "Description": "Find something that shouldn't be there.",
+      "Category": "Reconnaissance",
+      "Points": 15,
+      "Flag": "/super-ckret.txt",
+      "Order": 3
+    },
+    {
+      "Id": 4,
+      "Title": "Step 4: Forbidden Path",
+      "Description": "Where do they hide things from crawlers?",
+      "Category": "Reconnaissance",
+      "Points": 15,
+      "Flag": "/backup/",
+      "Order": 4
+    },
+    {
+      "Id": 5,
+      "Title": "Step 5: Left Behind",
+      "Description": "Extract a forgotten file from the system.",
+      "Category": "Reconnaissance",
+      "Points": 20,
+      "Flag": "evildbuser",
+      "Order": 5
+    },
+    {
+      "Id": 6,
+      "Title": "Step 6: Greeting",
+      "Description": "Who runs this joint?",
+      "Category": "Reconnaissance",
+      "Points": 20,
+      "Flag": "thanos",
+      "Order": 6
+    },
+    {
+      "Id": 7,
+      "Title": "Step 7: Try Harder",
+      "Description": "I wonder how good their password policy is...",
+      "Category": "Reconnaissance",
+      "Points": 25,
+      "Flag": "iloveyou123",
+      "Order": 7
+    },
+    {
+      "Id": 8,
+      "Title": "Step 8: Final Flag",
+      "Description": "What does the admin have stored in the vault?",
+      "Category": "Reconnaissance",
+      "Points": 30,
+      "Flag": "FLAG{Welcome_to_the_underground}",
+      "Order": 8
+    }
+  ]
+}
