@@ -1,0 +1,34 @@
+# Use Ubuntu base image
+FROM ubuntu:latest
+
+# Install Apache, PHP, OpenSSH, curl
+RUN apt-get update && \
+    apt-get install -y apache2 openssh-server php curl git net-tools
+
+# Setup SSH
+RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
+    echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config && \
+    mkdir -p /run/sshd
+
+# Add users
+RUN useradd -m evildbuser && echo "evildbuser:badpassword42" | chpasswd
+RUN useradd -m thanos && echo "thanos:iloveyou123" | chpasswd
+RUN useradd -m john && echo "john:password123" | chpasswd
+RUN useradd -m sarah && echo "sarah:letmein" | chpasswd
+RUN useradd -m admin && echo "admin:admin" | chpasswd
+
+# Set MOTD
+RUN echo "Greetings from thanos, your friendly neighbourhood megalomaniac sysadmin" > /etc/motd
+
+# Setup webserver
+COPY website/ /var/www/html/
+RUN chown -R www-data:www-data /var/www/html/
+RUN rm -f /var/www/html/index.html
+# Enable Apache mods
+RUN a2enmod rewrite headers env && \
+    a2ensite 000-default
+# Expose services
+EXPOSE 80 22
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
+CMD ["/start.sh"]
