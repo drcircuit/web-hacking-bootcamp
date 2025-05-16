@@ -1,37 +1,51 @@
 version: '3.8'
 
+networks:
+  evilcorp_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.24.0.0/16
+
 services:
-  bootcamp-portal:
-    build:
-      context: .
-      dockerfile: portal/Dockerfile
-    container_name: bootcamp-portal
+  nginx-proxy:
+    image: nginx:latest
+    container_name: evilcorp-router
+    networks:
+      evilcorp_net:
+        ipv4_address: 172.24.0.1
     ports:
       - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    restart: unless-stopped
+
+  bootcamp-portal:
+    build:
+      context: ./portal
+      dockerfile: Dockerfile
+    container_name: bootcamp-portal
     networks:
-      bootcamp_net:
-        ipv4_address: 172.30.0.10
+      evilcorp_net:
+        ipv4_address: 172.24.0.10
+    restart: unless-stopped
 
   lab1-recon-target:
     build:
-      context: .
-      dockerfile: labs/lab-1-recon/dockerfile
+      context: ./labs/lab-1-recon
+      dockerfile: dockerfile
     container_name: lab1-recon-box
-    ports:
-      - "80:80"
-      - "22:22"
     networks:
-      lab1_net:
-        ipv4_address: 172.20.0.10
+      evilcorp_net:
+        ipv4_address: 172.24.0.11
+    restart: unless-stopped
 
-networks:
-  bootcamp_net:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 172.30.0.0/24
-  lab1_net:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 172.20.0.0/24
+  attacker-box:
+    image: kalilinux/kali-linux-docker
+    container_name: attacker-box
+    networks:
+      evilcorp_net:
+        ipv4_address: 172.24.0.20
+    stdin_open: true
+    tty: true
+    restart: unless-stopped

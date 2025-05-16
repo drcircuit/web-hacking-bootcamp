@@ -10,7 +10,7 @@
       "Description": "Begin your recon from the surface. Ignore native services local to your system.",
       "Category": "Reconnaissance",
       "Points": 10,
-      "Flag": "22,80",
+      "Flag": "2222,8081",
       "Order": 1
     },
     {
