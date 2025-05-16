@@ -1,7 +1,7 @@
 {
   "Id": 1,
   "Title": "Reconnaissance Lab – Breaching Evil Corp",
-  "Description": "Start with passive recon. No exploits yet — just observation.",
+  "Description": "Welcome to the Reconnaissance Lab! Your mission is to gather intelligence on Evil Corp’s infrastructure without launching exploits. Start by browsing to the Evil Corp website at `http://lab1.evilcorp.local` to observe its public-facing services. Then, access your `attacker-box` by running `docker exec -it attacker-box bash` in your terminal. This Kali Linux environment comes pre-loaded with tools like `nmap`, `gobuster`, `hydra`, `seclists`, `dig`, `nslookup`, `curl`, and more. Use these tools to enumerate the network, identify services, and uncover hidden assets on `lab1.evilcorp.local`. Focus on passive and active reconnaissance techniques to complete the challenges.",
   "Category": "Intro",
   "Challenges": [
     {
@@ -10,7 +10,7 @@
       "Description": "Begin your recon from the surface. Ignore native services local to your system.",
       "Category": "Reconnaissance",
       "Points": 10,
-      "Flag": "2222,8081",
+      "Flag": "WCH{22,80}",
       "Order": 1
     },
     {
@@ -19,7 +19,7 @@
       "Description": "Look closer at what's running.",
       "Category": "Reconnaissance",
       "Points": 10,
-      "Flag": "Apache/2.4.29 (Ubuntu)",
+      "Flag": "WCH{Apache/2.4.58 (Ubuntu)}",
       "Order": 2
     },
     {
@@ -28,25 +28,25 @@
       "Description": "Find something that shouldn't be there.",
       "Category": "Reconnaissance",
       "Points": 15,
-      "Flag": "/super-ckret.txt",
+      "Flag": "WCH{super-ckret.txt}",
       "Order": 3
     },
     {
       "Id": 4,
       "Title": "Step 4: Forbidden Path",
-      "Description": "Where do they hide things from crawlers?",
+      "Description": "Can you find the location of stray old files?",
       "Category": "Reconnaissance",
       "Points": 15,
-      "Flag": "/backup/",
+      "Flag": "WCH{backup}",
       "Order": 4
     },
     {
       "Id": 5,
       "Title": "Step 5: Left Behind",
-      "Description": "Extract a forgotten file from the system.",
+      "Description": "Extract a service user from a forgotten file from the system.",
       "Category": "Reconnaissance",
       "Points": 20,
-      "Flag": "evildbuser",
+      "Flag": "WCH{evildbuser}",
       "Order": 5
     },
     {
@@ -55,7 +55,7 @@
       "Description": "Who runs this joint?",
       "Category": "Reconnaissance",
       "Points": 20,
-      "Flag": "thanos",
+      "Flag": "WCH{thanos}",
       "Order": 6
     },
     {
@@ -64,7 +64,7 @@
       "Description": "I wonder how good their password policy is...",
       "Category": "Reconnaissance",
       "Points": 25,
-      "Flag": "iloveyou123",
+      "Flag": "WCH{darkside}",
       "Order": 7
     },
     {
@@ -73,7 +73,7 @@
       "Description": "What does the admin have stored in the vault?",
       "Category": "Reconnaissance",
       "Points": 30,
-      "Flag": "FLAG{Welcome_to_the_underground}",
+      "Flag": "WCH{Welcome_to_the_underground}",
       "Order": 8
     }
   ]

@@ -12,7 +12,7 @@ RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/
 
 # Add users
 RUN useradd -m evildbuser && echo "evildbuser:badpassword42" | chpasswd
-RUN useradd -m thanos && echo "thanos:iloveyou123" | chpasswd
+RUN useradd -m thanos && echo "thanos:darkside" | chpasswd
 RUN useradd -m john && echo "john:password123" | chpasswd
 RUN useradd -m sarah && echo "sarah:letmein" | chpasswd
 RUN useradd -m admin && echo "admin:admin" | chpasswd
@@ -20,6 +20,8 @@ RUN useradd -m admin && echo "admin:admin" | chpasswd
 # Set MOTD
 RUN echo "Greetings from thanos, your friendly neighbourhood megalomaniac sysadmin" > /etc/motd
 
+# Set up thanos report in home directory
+RUN echo "Hello, I am thanos, the sysadmin of this server. I have a special report for you.\n\nWCH{Welcome_to_the_underground}" > /home/thanos/ckret-report.txt
 # Setup webserver
 COPY website/ /var/www/html/
 RUN chown -R www-data:www-data /var/www/html/
