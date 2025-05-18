@@ -1,0 +1,5 @@
+[DEBUG] Auth failure: expected RS256, received HMAC
+[DEBUG] Token header: {"alg":"HS256","typ":"JWT"}
+[DEBUG] Public key: -----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqh...IDAQAB
+-----END PUBLIC KEY-----

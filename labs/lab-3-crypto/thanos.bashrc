@@ -1,0 +1,1 @@
+echo "Welcome, Thanos. FLAG: WCH{evilcorp_executed_crypto}"

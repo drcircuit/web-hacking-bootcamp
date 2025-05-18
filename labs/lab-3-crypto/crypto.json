@@ -1,0 +1,71 @@
+{
+  "Id": 3,
+  "Title": "Cryptographic Failures Lab \u2013 Leaking the Vault",
+  "Description": "Welcome to EvilCorp\u2019s legacy crypto lab. This system was built with outdated encryption, poor JWT practices, and predictable secrets. Explore how subtle cryptographic missteps can expose the entire infrastructure. Start your attack by browsing to `http://lab3.evilcorp.local` and logging in. Use `docker exec -it attacker-box bash` to enter your Kali environment for deeper analysis and cracking.",
+  "Category": "OWASP A02: Cryptographic Failures",
+  "Challenges": [
+    {
+      "Id": 1,
+      "Title": "Step 1: Crack the Password",
+      "Description": "A weakly hashed password guards the door.",
+      "Category": "Crypto",
+      "Points": 10,
+      "Flag": "WCH{md5_was_a_mistake}",
+      "Order": 1
+    },
+    {
+      "Id": 2,
+      "Title": "Step 2: Decode the Vault Key",
+      "Description": "That base64 message might be a clue...",
+      "Category": "Crypto",
+      "Points": 10,
+      "Flag": "WCH{decoded_aes_key_success}",
+      "Order": 2
+    },
+    {
+      "Id": 3,
+      "Title": "Step 3: Find the Hardcoded Key",
+      "Description": "A buried config holds shared secrets.",
+      "Category": "Crypto",
+      "Points": 15,
+      "Flag": "WCH{hardcoded_and_hearted}",
+      "Order": 3
+    },
+    {
+      "Id": 4,
+      "Title": "Step 4: Trick the JWT System",
+      "Description": "Algorithms can be deceiving.",
+      "Category": "Crypto",
+      "Points": 15,
+      "Flag": "WCH{none_shall_pass}",
+      "Order": 4
+    },
+    {
+      "Id": 5,
+      "Title": "Step 5: Confuse the Key Type",
+      "Description": "HMAC vs RSA? A classic mistake.",
+      "Category": "Crypto",
+      "Points": 20,
+      "Flag": "WCH{key_confusion_activated}",
+      "Order": 5
+    },
+    {
+      "Id": 6,
+      "Title": "Step 6: Predict the Token",
+      "Description": "Reset token looks... guessable?",
+      "Category": "Crypto",
+      "Points": 20,
+      "Flag": "WCH{token_predicted_pw_resetted}",
+      "Order": 6
+    },
+    {
+      "Id": 7,
+      "Title": "Step 7: Crack Thanos",
+      "Description": "Break into the host system via leaked backup.",
+      "Category": "Crypto",
+      "Points": 25,
+      "Flag": "WCH{evilcorp_executed_crypto}",
+      "Order": 7
+    }
+  ]
+}

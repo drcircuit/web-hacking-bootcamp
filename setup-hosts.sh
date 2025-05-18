@@ -5,6 +5,9 @@
 HOSTS=(
   "bootcamp.local"
   "lab1.evilcorp.local"
+  "lab2.evilcorp.local"
+  "lab3.evilcorp.local"
+  "lab4.evilcorp.local"
 )
 
 echo "🔍 Checking current /etc/hosts entries..."
@@ -21,5 +24,6 @@ done
 echo ""
 echo "🎉 Host setup complete!"
 echo "You can now access:"
-echo "🔗 http://bootcamp.local"
-echo "🔗 http://lab1.evilcorp.local"
+for HOST in "${HOSTS[@]}"; do
+  echo "🔗 http://$HOST"
+done
