@@ -27,8 +27,13 @@ RUN chown -R www-data:www-data /var/www/html && \
     chown thanos:thanos /home/thanos/.bashrc
 
 WORKDIR /var/www/html
-
+# make db dir and set www-data as owner
+RUN mkdir -p /var/www/html/db && \
+    chown -R www-data:www-data /var/www/html/db
 RUN php init_db.php
+# set permissions for all *.sqlite files to www-data
+RUN chmod -R 755 /var/www/html/db && \
+    chown -R www-data:www-data /var/www/html/db/*.sqlite
 
 EXPOSE 80 22
 
