@@ -57,5 +57,7 @@ RUN echo "set -o vi" >> /root/.bashrc && \
 RUN gunzip -k /usr/share/wordlists/rockyou.txt.gz && \
     chmod 644 /usr/share/wordlists/rockyou.txt
 
+# install sqlite3 client
+RUN apt install sqlite3 wget -y
 # Default command to start a login shell
 CMD ["/bin/bash", "-l"]

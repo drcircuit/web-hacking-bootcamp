@@ -27,8 +27,20 @@ RUN chown -R www-data:www-data /var/www/html && \
     chown thanos:thanos /home/thanos/.bashrc
 
 WORKDIR /var/www/html
-
+# make db dir and set owership to www-data
+RUN mkdir -p /var/www/html/db && \
+    chown -R www-data:www-data /var/www/html/db
 RUN php init_db.php
+
+# set owner of *.sqlite files to www-data
+RUN chown -R www-data:www-data /var/www/html/db/*.sqlite
+
+RUN mkdir -p /var/www/html/backups && \
+    cp /var/www/html/db/evilcorp_crm.sqlite /var/www/html/backups/evilcorp_crm.sqlite.bak && \
+    chown www-data:www-data /var/www/html/backups/evilcorp_crm.sqlite.bak
+
+RUN echo "Options +Indexes" > /var/www/html/backups/.htaccess && \
+    chown www-data:www-data /var/www/html/backups/.htaccess
 
 EXPOSE 80 22
 
