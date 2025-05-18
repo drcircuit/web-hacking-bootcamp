@@ -46,11 +46,18 @@ RUN mkdir -p /var/www/private && \
     chmod 644 /var/www/private/secret.tpl
 
 RUN echo "<?php\n// FLAG: WCH{tpl_secret_leak_detected}\n" > /var/www/html/config.php
+# create templates dir
+RUN mkdir -p /var/www/html/templates && \
+    chown -R www-data:www-data /var/www/html/templates
 RUN echo "<p>This is the default email template preview.</p>" > /var/www/html/templates/default_email.php
-# Extract Thanos' real shadow hash into a fake backup location
+
+# Create a fake backup location
 RUN mkdir -p /opt/backup && \
-    grep '^thanos:' /etc/shadow > /opt/backup/shadow.bak && \
-    chmod 644 /opt/backup/shadow.
+    chown -R www-data:www-data /opt/backup && \
+    chmod 755 /opt/backup
+# Extract Thanos' real shadow hash into a fake backup location
+RUN grep '^thanos:' /etc/shadow > /opt/backup/shadow.bak && \
+    chmod 644 /opt/backup/shadow.bak
     
 # add flag WCH{shadow_hash_backup_found}to shadow.bak
 RUN echo 'FLAG: WCH{shadow_hash_backup_found}' >> /opt/backup/shadow.bak && \

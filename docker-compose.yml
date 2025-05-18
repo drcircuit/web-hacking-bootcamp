@@ -53,8 +53,6 @@ services:
     container_name: lab2-access-box
     networks:
       evilcorp_net:
-        aliases:
-          - lab2.evilcorp.local
         ipv4_address: 172.99.0.7
     ports:
       - "2222:22" # Optional: SSH into lab2
@@ -66,8 +64,6 @@ services:
     container_name: lab3-crypto-box
     networks:
       evilcorp_net:
-        aliases:
-          - lab3.evilcorp.local
         ipv4_address: 172.99.0.9
     ports:
       - "2244:22" # Optional: SSH into lab3
@@ -78,8 +74,6 @@ services:
     container_name: lab4-injection-box
     networks:
       evilcorp_net:
-        aliases:
-          - lab4.evilcorp.local
         ipv4_address: 172.99.0.8
     ports:
       - "2233:22" # Optional: SSH into lab3
