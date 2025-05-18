@@ -14,6 +14,8 @@ RUN apt-get update && apt-get install -y \
     traceroute \ 
     curl \
     git \
+    python3 \
+    python3-pip \
     vim \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
@@ -21,5 +23,7 @@ RUN apt-get update && apt-get install -y \
 # Set working directory
 WORKDIR /root
 COPY custom-words.txt /root/custom-words.txt
+# copy scripts folder
+COPY scripts /root/scripts
 # Default command to keep container running interactively
 CMD ["/bin/bash"]
