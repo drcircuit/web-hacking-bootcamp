@@ -1,0 +1,89 @@
+{
+  "Id": 3,
+  "Title": "Injection Lab – Breaching EvilCorp CRM",
+  "Description": "Welcome to EvilCorp’s internal CRM system – or so they claim. Beneath the surface lies a collection of poorly secured scripts, injectable queries, broken templates, and command injection slip-ups. Start by browsing to `http://lab3.evilcorp.local` to observe the login system. Then, access your `attacker-box` by running `docker exec -it attacker-box bash` in your terminal. Use classic injection techniques to manipulate backend behavior, extract data, escalate roles, and ultimately gain remote access to the host.",
+  "Category": "OWASP A02: Injection",
+  "Challenges": [
+    {
+      "Id": 1,
+      "Title": "Step 1: Login Bypass",
+      "Description": "Bypass the login form using an injection trick.",
+      "Category": "Injection",
+      "Points": 10,
+      "Flag": "WCH{bypass_login_access_granted}",
+      "Order": 1
+    },
+    {
+      "Id": 2,
+      "Title": "Step 2: Extract User Hashes",
+      "Description": "Leverage SQL injection to extract usernames and password hashes.",
+      "Category": "Injection",
+      "Points": 10,
+      "Flag": "WCH{user_hash_leak_sql_master}",
+      "Order": 2
+    },
+    {
+      "Id": 3,
+      "Title": "Step 3: Find the Hidden Table",
+      "Description": "Use SQL to enumerate hidden tables and find something suspicious.",
+      "Category": "Injection",
+      "Points": 15,
+      "Flag": "WCH{hidden_table_secretly_yours}",
+      "Order": 3
+    },
+    {
+      "Id": 4,
+      "Title": "Step 4: Network Recon Script",
+      "Description": "Abuse a command injection flaw in a network utility.",
+      "Category": "Injection",
+      "Points": 15,
+      "Flag": "WCH{cmd_injection_network_recon}",
+      "Order": 4
+    },
+    {
+      "Id": 5,
+      "Title": "Step 5: Template Injection Seed",
+      "Description": "Trigger the creation of a sensitive template file.",
+      "Category": "Injection",
+      "Points": 15,
+      "Flag": "WCH{tpl_secret_leak_detected}",
+      "Order": 5
+    },
+    {
+      "Id": 6,
+      "Title": "Step 6: Load a Secret Template",
+      "Description": "Find and include the secret flag template.",
+      "Category": "Injection",
+      "Points": 20,
+      "Flag": "WCH{tpl_secret_leak_detected}",
+      "Order": 6
+    },
+    {
+      "Id": 7,
+      "Title": "Step 7: Shadow Backup",
+      "Description": "Find a forgotten backup of the shadow file.",
+      "Category": "Injection",
+      "Points": 25,
+      "Flag": "WCH{shadow_hash_backup_found}",
+      "Order": 7
+    },
+    {
+      "Id": 8,
+      "Title": "Step 8: Crack Thanos",
+      "Description": "Crack Thanos’ password using the shadow hash and rockyou.txt.",
+      "Category": "Injection",
+      "Points": 30,
+      "Flag": "WCH{thanos_password_cracked}",
+      "Order": 8
+    },
+    {
+      "Id": 9,
+      "Title": "Step 9: SSH Access",
+      "Description": "Login as Thanos via SSH to receive your final reward.",
+      "Category": "Injection",
+      "Points": 35,
+      "Flag": "WCH{evilcorp_host_compromised_ssh}",
+      "Order": 9
+    }
+  ]
+}
