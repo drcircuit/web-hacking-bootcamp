@@ -1,12 +1,19 @@
 <?php
 session_start();
-$db = new SQLite3('evilcorp_crm.sqlite');
+$db = new SQLite3(__DIR__ . '/db/evilcorp_crm.sqlite');
 
 if (!isset($_SESSION['user'])) {
     header("Location: login.php");
     exit;
 }
+$msg = $_GET['msg'] ?? 'Welcome back!';
+$output = '';
 
+try {
+    eval("\$output = \"$msg\";");
+} catch (Throwable $e) {
+    $output = "Error parsing template.";
+}
 $info = null;
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
@@ -29,6 +36,7 @@ if (isset($_GET['id'])) {
     <div class="text-center mb-4">
         <img src="/images/logo.png" width="80">
         <h2 class="mt-3">EvilCorp CRM – User Profile</h2>
+        <p><?= htmlspecialchars($output) ?></p>
     </div>
     <form method="GET" class="mb-3">
         <label for="id" class="form-label">Lookup User by ID</label>

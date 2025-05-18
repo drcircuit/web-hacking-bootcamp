@@ -1,43 +1,34 @@
 <?php
 session_start();
-$db = new SQLite3('evilcorp_crm.sqlite');
+$db = new SQLite3(__DIR__ . '/db/evilcorp_crm.sqlite');
 
-if (!isset($_SESSION['user']) || $_SESSION['role'] !== 'admin') {
+if (!isset($_SESSION['user'])) {
     header("Location: login.php");
     exit;
 }
 
-$query = "SELECT * FROM messages WHERE sender = 'admin' AND recipient = 'admin' AND subject = 'Flag'";
-$result = $db->query($query);
-$flag = null;
+$stmt = $db->prepare("SELECT role FROM users WHERE id = :id");
+$stmt->bindValue(':id', $_SESSION['user_id'], SQLITE3_INTEGER);
+$result = $stmt->execute();
+$row = $result->fetchArray(SQLITE3_ASSOC);
 
-if ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-    $flag = $row['body'];
+if (!$row || $row['role'] !== 'admin') {
+    echo "Access denied.";
+    exit;
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Admin Panel - EvilCorp</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Admin Panel – EvilCorp</title>
     <link rel="stylesheet" href="/css/styles.css">
 </head>
-<body>
-<div class="container mt-5">
-    <div class="text-center mb-4">
-        <img src="/images/logo.png" width="80">
-        <h2 class="mt-3 text-danger">Admin Panel</h2>
-        <p class="text-muted">Top secret data. Executives only.</p>
-    </div>
-    <?php if ($flag): ?>
-        <div class="card p-4 text-center">
-            <h4 class="mb-3">💥 Final Flag 💥</h4>
-            <div class="alert alert-success fs-4"><?= htmlspecialchars($flag) ?></div>
-        </div>
-    <?php else: ?>
-        <p class="text-danger">No flag found.</p>
-    <?php endif; ?>
-</div>
+<body class="p-4">
+    <h1>Admin Control Panel</h1>
+    <p>Welcome, administrator. You may now perform sensitive internal diagnostics.</p>
+    <a href="/admin/ping.php" class="btn btn-danger mt-3">Launch Ping Interface</a>
+    <a href="/profile.php?msg=Welcome,%20admin!" class="btn btn-secondary mt-3">Open Profile Preview Tool</a>
+    <a href="/email_preview.php" class="btn btn-primary mt-3">Email Template Preview</a>
 </body>
 </html>

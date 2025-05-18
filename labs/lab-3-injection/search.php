@@ -1,12 +1,16 @@
 <?php
 session_start();
-$db = new SQLite3('evilcorp_crm.sqlite');
+$db = new SQLite3(__DIR__ . '/db/evilcorp_crm.sqlite');
 
 if (!isset($_SESSION['user'])) {
     header("Location: login.php");
     exit;
 }
 
+if (!isset($_SESSION['shown_flag'])) {
+    echo '<div class="alert alert-success text-center mt-3">Welcome to EvilCorp CRM!<br>Flag: <strong>WCH{bypass_login_access_granted}</strong></div>';
+    $_SESSION['shown_flag'] = true;
+}
 $results = [];
 if (isset($_GET['q'])) {
     $q = $_GET['q'];

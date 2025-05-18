@@ -1,6 +1,6 @@
 <?php
 session_start();
-$db = new SQLite3('evilcorp_crm.sqlite');
+$db = new SQLite3(__DIR__ . '/db/evilcorp_crm.sqlite');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
@@ -13,7 +13,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($row = $result->fetchArray()) {
         $_SESSION['user'] = $row['username'];
         $_SESSION['role'] = $row['role'];
-        header("Location: search.php");
+        $_SESSION['user_id'] = $row['id'];
+        $role = $_SESSION['role'] ?? 'user';
+    if ($role === 'admin') {
+        header('Location: /admin.php');
+    } else {
+        header('Location: /search.php');
+    }
         exit;
     } else {
         $error = "Invalid credentials!";
