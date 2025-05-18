@@ -1,0 +1,77 @@
+FROM debian:bullseye
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install required build and runtime dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    wget curl \
+    libtool \
+    libpcre3 libpcre3-dev \
+    libssl-dev \
+    libxml2-dev \
+    zlib1g-dev \
+    libexpat1-dev \
+    openssh-server \
+    sqlite3 php7.4-sqlite3 \
+    supervisor php7.4-cli php7.4-common \
+    apache2-utils unzip \
+    libsqlite3-dev pkg-config \
+    autoconf libcurl4-openssl-dev \
+    libonig-dev && \
+    rm -rf /var/lib/apt/lists/*
+
+# Build Apache 2.4.49 from source
+WORKDIR /usr/local/src
+
+RUN wget https://archive.apache.org/dist/httpd/httpd-2.4.49.tar.gz && \
+    tar -xzf httpd-2.4.49.tar.gz && \
+    wget https://archive.apache.org/dist/apr/apr-1.7.0.tar.gz && \
+    wget https://archive.apache.org/dist/apr/apr-util-1.6.1.tar.gz && \
+    tar -xzf apr-1.7.0.tar.gz && mv apr-1.7.0 httpd-2.4.49/srclib/apr && \
+    tar -xzf apr-util-1.6.1.tar.gz && mv apr-util-1.6.1 httpd-2.4.49/srclib/apr-util && \
+    cd httpd-2.4.49 && \
+    ./configure --enable-so --enable-rewrite --enable-cgi --with-mpm=event --prefix=/usr/local/apache2 && \
+    make && make install
+
+# Build PHP 7.4 with mod_php support
+RUN wget https://www.php.net/distributions/php-7.4.33.tar.gz && \
+    tar -xzf php-7.4.33.tar.gz && \
+    cd php-7.4.33 && \
+    ./configure --with-apxs2=/usr/local/apache2/bin/apxs --with-zlib --with-curl --with-openssl --enable-mbstring --with-sqlite3 && \
+    make && make install
+
+# Add PHP config
+COPY php.ini /usr/local/lib/php.ini
+# Add Apache config
+COPY custom-httpd.conf /usr/local/apache2/conf/httpd.conf
+
+# delete default index.html
+RUN rm -rf /usr/local/apache2/htdocs/index.html
+# Copy website and setup DB
+COPY website/ /usr/local/apache2/htdocs/
+RUN mkdir -p /usr/local/apache2/htdocs/db && \
+    php /usr/local/apache2/htdocs/init_db.php && \
+    chown -R www-data:www-data /usr/local/apache2/htdocs/db && \
+    chmod 755 /usr/local/apache2/htdocs/db && \
+    chmod 644 /usr/local/apache2/htdocs/db/maildb.sqlite
+
+RUN sed -i 's/^ENCRYPT_METHOD.*/ENCRYPT_METHOD SHA512/' /etc/login.defs
+RUN sed -i 's/^password.*pam_unix.so.*/password [success=1 default=ignore] pam_unix.so obscure sha512/' /etc/pam.d/common-password
+
+# Set up SSH
+RUN useradd -m thanos && echo "thanos:password123" | chpasswd -c SHA512 && mkdir -p /var/run/sshd && \
+    echo "PermitRootLogin yes" >> /etc/ssh/sshd_config && \
+    echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
+
+# Add flags
+RUN echo "thanos:x:1000:1000::/home/thanos:/bin/bash" >> /etc/passwd && \
+    echo "# Flag: WCH{admin_user_discovered_danger_zone}" >> /etc/shadow && \
+    echo "WCH{hash_cracked_like_a_pro}" > /etc/motd && \
+    echo "Final Flag: WCH{access_granted_to_the_evil_core}" > /home/thanos/report.txt && chown -R thanos:thanos /home/thanos
+
+# Add supervisor config to manage httpd + sshd
+COPY supervisord.conf /etc/supervisord.conf
+
+EXPOSE 80 22
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]

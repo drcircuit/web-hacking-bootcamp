@@ -1,0 +1,89 @@
+{
+    "Id": 2,
+    "Title": "Broken Access Control Lab – Breaching Evil Mail",
+    "Description": "Evil Corp has launched a secure internal email service only available to executives. Or so they think.",
+    "Category": "OWASP A01: Broken Access Control",
+    "Challenges": [
+      {
+        "Id": 1,
+        "Title": "Step 1: Unauthorized Inbox Access",
+        "Description": "Can you access another user's inbox?",
+        "Category": "Access Control",
+        "Points": 10,
+        "Flag": "WCH{you_got_mail_from_the_dark_side}",
+        "Order": 1
+      },
+      {
+        "Id": 2,
+        "Title": "Step 2: Read Private Message",
+        "Description": "Read something not meant for you.",
+        "Category": "Access Control",
+        "Points": 10,
+        "Flag": "WCH{message_read_bypass_granted}",
+        "Order": 2
+      },
+      {
+        "Id": 3,
+        "Title": "Step 3: Find signing key",
+        "Description": "Find the signing key for the JWT.",
+        "Category": "Access Control",
+        "Points": 15,
+        "Flag": "WCH{evilcorp_signing_key_found}",
+        "Order": 3
+      },
+      {
+        "Id": 4,
+        "Title": "Step 4: Role Upgrade",
+        "Description": "Gain elevated privileges without login.",
+        "Category": "Access Control",
+        "Points": 15,
+        "Flag": "WCH{role_upgrade_juicy_style}",
+        "Order": 4
+      },
+      {
+        "Id": 5,
+        "Title": "Step 5: Spoofed Identity",
+        "Description": "Impersonate a higher-level role.",
+        "Category": "Access Control",
+        "Points": 20,
+        "Flag": "WCH{i_am_your_admin_now}",
+        "Order": 5
+      },
+      {
+        "Id": "6",
+        "Title": "Step 6: Config Leak",
+        "Description": "Expose sensitive data from config files.",
+        "Category": "Access Control",
+        "Points": 20,
+        "Flag": "WCH{config_found_lfi_your_way_in}",
+        "Order": 6
+      },
+      {
+        "Id": 7,
+        "Title": "Step 7: Hidden User",
+        "Description": "Find a privileged account from system file.",
+        "Category": "Access Control",
+        "Points": 25,
+        "Flag": "WCH{admin_user_discovered_danger_zone}",
+        "Order": 7
+      },
+      {
+        "Id": 8,
+        "Title": "Step 8: Hash Extraction",
+        "Description": "Crack credentials using exposed hashes.",
+        "Category": "Access Control",
+        "Points": 30,
+        "Flag": "WCH{hash_cracked_like_a_pro}",
+        "Order": 8
+      },
+      {
+        "Id": 9,
+        "Title": "Step 9: Final Takeover",
+        "Description": "Retrieve what was meant to stay hidden.",
+        "Category": "Access Control",
+        "Points": 35,
+        "Flag": "WCH{access_granted_to_the_evil_core}",
+        "Order": 9
+      }
+    ]
+  }
