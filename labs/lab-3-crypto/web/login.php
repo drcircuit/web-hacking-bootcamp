@@ -5,15 +5,14 @@ $db = new SQLite3('db/evilcorp_crm.sqlite');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $password = md5($_POST['password']);  // 🔓 Weak hashing
-
     $stmt = $db->prepare("SELECT * FROM legacy_users WHERE username = :username AND password = :password");
     $stmt->bindValue(':username', $username, SQLITE3_TEXT);
     $stmt->bindValue(':password', $password, SQLITE3_TEXT);
     $result = $stmt->execute();
     $user = $result->fetchArray(SQLITE3_ASSOC);
-
     if ($user) {
         $_SESSION['user'] = $username;
+        $_SESSION['user_id'] = $user['id'];
         header("Location: inbox.php");
         exit;
     } else {
