@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 if ($db->changes() > 0) {
                                     $user_id = $db->lastInsertRowID();
                                     $subject = 'Welcome to EvilCorp';
-                                    $body = "Welcome, $username! You have been granted the role: $role. Flag: WCH{you_got_mail_from_the_dark_side}";
+                                    $body = "Welcome, $username! You have been granted the role: $role. Flag: WCH{not_the_flag_you_are_looking_for}";
                                     $email_stmt = $db->prepare('INSERT INTO emails (user_id, subject, body) VALUES (:user_id, :subject, :body)');
                                     if (!$email_stmt) {
                                         $error = 'Database error: Failed to prepare email insert query. ' . $db->lastErrorMsg();
