@@ -85,9 +85,13 @@ services:
     build:
       context: ./attacker-box
       dockerfile: Dockerfile
+    cap_add:
+      - NET_ADMIN  # Allows network configuration changes
+      - NET_RAW    # Allows raw packet operations (required for nmap)
+    privileged: true
+    tty: true
+    stdin_open: true
     networks:
       evilcorp_net:
         ipv4_address: 172.99.0.2
-    stdin_open: true
-    tty: true
     restart: unless-stopped

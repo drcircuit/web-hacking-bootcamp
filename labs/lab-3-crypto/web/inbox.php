@@ -41,6 +41,13 @@ $results = $stmt->execute();
             </div>
         </div>
     <?php endwhile; ?>
+    div class="card mb-3">
+        <div class="card-header">
+            <a href="vault_console.php">Vault Console</a>
+        </div>
+        <div class="card-body">
+            <p>Access the vault console to manage your encrypted messages.<br>FLAG: WCH{decoded_aes_key_success}</p>
+        </div>
 </div>
 </body>
 </html>

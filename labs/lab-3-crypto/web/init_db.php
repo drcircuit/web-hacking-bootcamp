@@ -46,11 +46,18 @@ $db->exec("INSERT INTO emails (user_id, subject, body) VALUES (
 );");
 
 // Encrypt and store vault message
-$vaultMessage = "See admin.php next.... \nFLAG: WCH{decoded_aes_key_success}";
+$vaultMessage = "See admin.php next.... for future reference: ATTACK_BLOCK could be a good key...\n";
 $key = "vault_s3cr3t_key";
 $outputFile = __DIR__ . "/encrypted/vault_message.enc";
 @mkdir(__DIR__ . "/encrypted");
 encrypt_vault_message($vaultMessage, $key, $outputFile);
+
+$plaintext = str_repeat("ATTACK_BLOCK", 2) . "| Flag: WCH{ecb_mode_block_breach}";
+$key = "ecb_secret_key123"; // 16 bytes = 128-bit key
+$method = "AES-128-ECB";
+
+$ciphertext = openssl_encrypt($plaintext, $method, $key, OPENSSL_RAW_DATA);
+file_put_contents(__DIR__ . '/encrypted/leak_ecb.enc', bin2hex($ciphertext));
 
 // Send vault email with download link
 $vaultURL = "http://lab3.evilcorp.local/encrypted/vault_message.enc";

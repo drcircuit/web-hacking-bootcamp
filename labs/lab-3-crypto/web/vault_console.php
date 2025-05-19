@@ -26,6 +26,9 @@ if (isset($_COOKIE['vault_token'])) {
     $payload = verify_none_jwt($_COOKIE['vault_token']);
     if ($payload && ($payload['level'] ?? '') === 'ultra') {
         $flag = 'WCH{jwt_alg_none_claim_check}';
+        ?>
+        <a href="/encrypted/leak_ecb.enc" download>Download Vault Message, see if you can ATTACK this one...</a>
+        <?php
     } else {
         $error = 'Vault access denied. Only ultra-level sysadmins may proceed.';
     }
