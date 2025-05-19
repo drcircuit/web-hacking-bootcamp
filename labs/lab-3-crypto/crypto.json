@@ -19,7 +19,7 @@
       "Description": "That base64 message might be a clue...",
       "Category": "Crypto",
       "Points": 10,
-      "Flag": "WCH{decoded_aes_key_success}",
+      "Flag": "WCH{iv_got_the_power}",
       "Order": 2
     },
     {

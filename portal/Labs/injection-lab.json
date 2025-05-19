@@ -1,7 +1,7 @@
 {
   "Id": 4,
   "Title": "Injection Lab – Breaching EvilCorp CRM",
-  "Description": "Welcome to EvilCorp’s internal CRM system – or so they claim. Beneath the surface lies a collection of poorly secured scripts, injectable queries, broken templates, and command injection slip-ups. Start by browsing to `http://lab3.evilcorp.local` to observe the login system. Then, access your `attacker-box` by running `docker exec -it attacker-box bash` in your terminal. Use classic injection techniques to manipulate backend behavior, extract data, escalate roles, and ultimately gain remote access to the host.",
+  "Description": "Welcome to EvilCorp’s internal CRM system – or so they claim. Beneath the surface lies a collection of poorly secured scripts, injectable queries, broken templates, and command injection slip-ups. Start by browsing to `http://lab4.evilcorp.local` to observe the login system. Then, access your `attacker-box` by running `docker exec -it attacker-box bash` in your terminal. Use classic injection techniques to manipulate backend behavior, extract data, escalate roles, and ultimately gain remote access to the host.",
   "Category": "OWASP A03: Injection",
   "Challenges": [
     {

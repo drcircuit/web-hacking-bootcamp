@@ -1,0 +1,19 @@
+{
+    "name": "acrosstheuniverse",
+    "version": "1.0.0",
+    "description": "A social networking site with XSS vulnerability",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js"
+    },
+    "dependencies": {
+        "body-parser": "~1.19.0",
+        "connect-sqlite3": "~0.9.15",
+        "express": "~4.19.1",
+        "express-session": "~1.17.1",
+        "md5": "~2.3.0",
+        "puppeteer": "~22.10.0",
+        "sanitize-html": "2.13.0",
+        "sqlite3": "~5.1.7"
+    }
+}

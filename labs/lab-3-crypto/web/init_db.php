@@ -26,6 +26,12 @@ $db->exec("CREATE TABLE emails (
     subject TEXT,
     body TEXT
 );");
+$db->exec("CREATE TABLE config (
+    key TEXT PRIMARY KEY,
+    value TEXT NOT NULL
+);");
+
+$db->exec("INSERT INTO config (key, value) VALUES ('vault_key', 'vault_s3cr3t_key');");
 
 // Create legacy admin
 $username = 'legacy_admin';
@@ -46,7 +52,7 @@ $db->exec("INSERT INTO emails (user_id, subject, body) VALUES (
 );");
 
 // Encrypt and store vault message
-$vaultMessage = "See admin.php next.... for future reference: ATTACK_BLOCK could be a good key...\n";
+$vaultMessage = file_get_contents(__DIR__ . "/vault_plain.txt");
 $key = "vault_s3cr3t_key";
 $outputFile = __DIR__ . "/encrypted/vault_message.enc";
 @mkdir(__DIR__ . "/encrypted");

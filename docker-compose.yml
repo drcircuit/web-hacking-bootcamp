@@ -1,31 +1,70 @@
-version: '3.8'
-
 networks:
   evilcorp_net:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.99.0.0/16
-
+      - subnet: 172.99.0.0/16
 services:
-  nginx-proxy:
-    image: nginx:latest
-    container_name: evilcorp-router
+  acrosstheuniverse:
+    build:
+      context: ./labs/lab-6-vulncomp2/acrosstheuniverse
+    container_name: acrosstheuniverse
+    hostname: acrosstheuniverse
     networks:
       evilcorp_net:
-        aliases:
-          - bootcamp.local
-          - lab1.evilcorp.local
-          - lab2.evilcorp.local
-          - lab3.evilcorp.local
-          - lab4.evilcorp.local
-        ipv4_address: 172.99.0.5
+        ipv4_address: 172.99.0.11
     ports:
-      - "80:80"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
+    - 8086:80
     restart: unless-stopped
-
+  adminjokes:
+    build:
+      context: ./labs/lab-5-vulncomp/adminjokes
+    container_name: adminjokes
+    hostname: adminjokes
+    networks:
+      evilcorp_net:
+        ipv4_address: 172.99.0.12
+    ports:
+    - 8080:80
+    restart: unless-stopped
+  artforgery:
+    build:
+      context: ./labs/lab-6-vulncomp2/artforgery
+    container_name: artforgery
+    hostname: artforgery
+    networks:
+      evilcorp_net:
+        ipv4_address: 172.99.0.13
+    ports:
+    - 8087:80
+    restart: unless-stopped
+  astcomputers:
+    build:
+      context: ./labs/lab-6-vulncomp2/ASTComputers
+    container_name: astcomputers
+    hostname: astcomputers
+    networks:
+      evilcorp_net:
+        ipv4_address: 172.99.0.10
+    ports:
+    - 8088:80
+    restart: unless-stopped
+  attacker-box:
+    build:
+      context: ./attacker-box
+      dockerfile: Dockerfile
+    cap_add:
+    - NET_ADMIN
+    - NET_RAW
+    container_name: attacker-box
+    image: custom-kali-attacker:latest
+    networks:
+      evilcorp_net:
+        ipv4_address: 172.99.0.2
+    privileged: true
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
   bootcamp-portal:
     build:
       context: ./portal
@@ -35,7 +74,39 @@ services:
       evilcorp_net:
         ipv4_address: 172.99.0.3
     restart: unless-stopped
-
+  grinchcalculator:
+    build:
+      context: ./labs/lab-6-vulncomp2/grinchcalculator
+    container_name: grinchcalculator
+    hostname: grinchcalculator
+    networks:
+      evilcorp_net:
+        ipv4_address: 172.99.0.14
+    ports:
+    - 8089:80
+    restart: unless-stopped
+  grinchserialkiller:
+    build:
+      context: ./labs/lab-6-vulncomp2/grinchserialkiller
+    container_name: grinchserialkiller
+    hostname: grinchserialkiller
+    networks:
+      evilcorp_net:
+        ipv4_address: 172.99.0.15
+    ports:
+    - 8090:80
+    restart: unless-stopped
+  impossible:
+    build:
+      context: ./labs/lab-6-vulncomp2/impossible
+    container_name: impossible
+    hostname: impossible
+    networks:
+      evilcorp_net:
+        ipv4_address: 172.99.0.16
+    ports:
+    - 8091:80
+    restart: unless-stopped
   lab1-recon-target:
     build:
       context: ./labs/lab-1-recon
@@ -43,9 +114,8 @@ services:
     container_name: lab1-recon-box
     networks:
       evilcorp_net:
-        ipv4_address: 172.99.0.4
+        ipv4_address: 172.99.0.17
     restart: unless-stopped
-
   lab2-access-target:
     build:
       context: ./labs/lab-2-access
@@ -53,9 +123,9 @@ services:
     container_name: lab2-access-box
     networks:
       evilcorp_net:
-        ipv4_address: 172.99.0.7
+        ipv4_address: 172.99.0.18
     ports:
-      - "2222:22" # Optional: SSH into lab2
+    - '2222:22'
     restart: unless-stopped
   lab3-crypto-target:
     build:
@@ -64,9 +134,9 @@ services:
     container_name: lab3-crypto-box
     networks:
       evilcorp_net:
-        ipv4_address: 172.99.0.9
+        ipv4_address: 172.99.0.19
     ports:
-      - "2244:22" # Optional: SSH into lab3
+    - '2244:22'
   lab4-injection-target:
     build:
       context: ./labs/lab-4-injection
@@ -74,24 +144,84 @@ services:
     container_name: lab4-injection-box
     networks:
       evilcorp_net:
-        ipv4_address: 172.99.0.8
+        ipv4_address: 172.99.0.20
     ports:
-      - "2233:22" # Optional: SSH into lab3
+    - '2233:22'
     restart: unless-stopped
-
-  attacker-box:
-    image: custom-kali-attacker:latest
-    container_name: attacker-box
-    build:
-      context: ./attacker-box
-      dockerfile: Dockerfile
-    cap_add:
-      - NET_ADMIN  # Allows network configuration changes
-      - NET_RAW    # Allows raw packet operations (required for nmap)
-    privileged: true
-    tty: true
-    stdin_open: true
+  nginx-proxy:
+    container_name: evilcorp-router
+    image: nginx:latest
     networks:
       evilcorp_net:
-        ipv4_address: 172.99.0.2
+        ipv4_address: 172.99.0.21
+    ports:
+    - 80:80
+    restart: unless-stopped
+    volumes:
+    - ./nginx.conf:/etc/nginx/nginx.conf
+  receiptexifer:
+    build:
+      context: ./labs/lab-5-vulncomp/receiptexifer
+    container_name: receiptexifer
+    hostname: receiptexifer
+    networks:
+      evilcorp_net:
+        ipv4_address: 172.99.0.22
+    ports:
+    - 8081:80
+    restart: unless-stopped
+  reindeer:
+    build:
+      context: ./labs/lab-5-vulncomp/draw-with-the-reindeer/
+    container_name: draw-with-the-reindeer
+    hostname: reindeer
+    networks:
+      evilcorp_net:
+        ipv4_address: 172.99.0.23
+    ports:
+    - 8082:3000
+    restart: unless-stopped
+  santascodingworkshop:
+    build:
+      context: ./labs/lab-5-vulncomp/santascodingworkshop
+    container_name: santascodingworkshop
+    hostname: santascodingworkshop
+    networks:
+      evilcorp_net:
+        ipv4_address: 172.99.0.24
+    ports:
+    - 8083:80
+    restart: unless-stopped
+  santasdisco:
+    build:
+      context: ./labs/lab-5-vulncomp/santasdisco
+    container_name: santasdisco
+    hostname: santasdisco
+    networks:
+      evilcorp_net:
+        ipv4_address: 172.99.0.25
+    ports:
+    - 8084:80
+    restart: unless-stopped
+  syringe:
+    build:
+      context: ./labs/lab-6-vulncomp2/syringe
+    container_name: syringe
+    hostname: syringe
+    networks:
+      evilcorp_net:
+        ipv4_address: 172.99.0.26
+    ports:
+    - 8092:80
+    restart: unless-stopped
+  wishlistrenderer:
+    build:
+      context: ./labs/lab-5-vulncomp/wishlistrenderer
+    container_name: wishlistrenderer
+    hostname: wishlistrenderer
+    networks:
+      evilcorp_net:
+        ipv4_address: 172.99.0.27
+    ports:
+    - 8085:80
     restart: unless-stopped

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Friends</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-image: url('bg.png');
+      background-size: cover;
+    }
+    .container {
+      max-width: 800px;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Joke Network</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/auth/register">Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/auth/login">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/jokes/wall">Wall</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/jokes/friends">Friends</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <h1>Friends</h1>
+    <form id="add-friend-form">
+      <div class="mb-3">
+        <label for="friendNickname" class="form-label">Friend's Nickname</label>
+        <input type="text" class="form-control" id="friendNickname" name="nickname" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Add Friend</button>
+    </form>
+    <hr>
+    <div id="friends-list">
+      <!-- Friends list will be dynamically inserted here -->
+    </div>
+  </div>
+  <script>
+    function fetchFriends() {
+      fetch('/jokes/get-friends').then(response => response.json()).then(data => {
+        const friendsList = document.getElementById('friends-list');
+        friendsList.innerHTML = '';
+        data.friends.forEach(friend => {
+          const friendDiv = document.createElement('div');
+          friendDiv.className = 'friend';
+          friendDiv.innerHTML = `<strong>${friend.nickname}</strong>: ${friend.joke}`;
+          friendsList.appendChild(friendDiv);
+        });
+      });
+    }
+
+    document.getElementById('add-friend-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const nickname = document.getElementById('friendNickname').value;
+      fetch(`/jokes/friend/${nickname}`)
+        .then(response => {
+          if (response.ok) {
+            fetchFriends(); // Refresh friends list after adding a new friend
+          } else {
+            console.error('Failed to add friend');
+          }
+        });
+    });
+
+    // Fetch the friends list when the page loads
+    fetchFriends();
+  </script>
+</body>
+</html>

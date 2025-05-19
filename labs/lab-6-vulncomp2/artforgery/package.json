@@ -1,0 +1,23 @@
+{
+    "name": "nft-showcase",
+    "version": "1.0.0",
+    "description": "AI-Generated NFT Art Showcase with JWT Forgery Challenge",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js"
+    },
+    "dependencies": {
+        "bcrypt": "5.1.1",
+        "body-parser": "1.20.2",
+        "cookie-parser": "1.4.5",
+        "express": "4.19.2",
+        "express-session": "1.18.0",
+        "jsonwebtoken": "^8.5.1",
+        "sqlite3": "5.1.7"
+    },
+    "author": "WCH",
+    "license": "MIT",
+    "devDependencies": {
+        "axios": "^1.7.2"
+    }
+}

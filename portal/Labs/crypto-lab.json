@@ -1,0 +1,71 @@
+{
+    "Id": 3,
+    "Title": "Cryptographic Failures Lab \u2013 Peel the Onion",
+    "Description": "EvilCorp has deployed layers of encryption and signature mechanisms to protect their internal systems. Your task is to peel back each layer of cryptographic misconfiguration and misuse, culminating in the full decryption of Thanos' sensitive report. Each step reveals new hints or access to the next challenge. Use standard tools like `curl`, `john`, and `ssh`, and bring your crypto A-game.",
+    "Category": "OWASP A02: Cryptographic Failures",
+    "Challenges": [
+        {
+            "Id": 1,
+            "Title": "Step 1: Leaked Backup & MD5 Crack",
+            "Description": "Crack the MD5 password from a leaked SQLite DB.",
+            "Category": "Cryptographic Failures",
+            "Points": 10,
+            "Flag": "WCH{md5_was_a_mistake}",
+            "Order": 1
+        },
+        {
+            "Id": 2,
+            "Title": "Step 2: AES Vault Decryption",
+            "Description": "Decrypt the vault message using a known ECB key.",
+            "Category": "Cryptographic Failures",
+            "Points": 10,
+            "Flag": "WCH{iv_got_the_power}",
+            "Order": 2
+        },
+        {
+            "Id": 3,
+            "Title": "Step 3: JWT None Bypass",
+            "Description": "Forge a JWT using `alg: none` to gain access.",
+            "Category": "Cryptographic Failures",
+            "Points": 15,
+            "Flag": "WCH{n0ne_is_too_many}",
+            "Order": 3
+        },
+        {
+            "Id": 4,
+            "Title": "Step 4: XOR Message Tampering",
+            "Description": "Use known plaintext to recover and alter an XOR-encrypted blob.",
+            "Category": "Cryptographic Failures",
+            "Points": 15,
+            "Flag": "WCH{xor_marks_the_flaw}",
+            "Order": 4
+        },
+        {
+            "Id": 5,
+            "Title": "Step 5: Crack the ZIP",
+            "Description": "Brute-force a password-protected ZIP to extract the flag.",
+            "Category": "Cryptographic Failures",
+            "Points": 20,
+            "Flag": "WCH{zip_passwords_are_weak}",
+            "Order": 5
+        },
+        {
+            "Id": 6,
+            "Title": "Step 6: SHA1 Hash Crack",
+            "Description": "Find and crack Thanos' password from a leaked SHA1 hash in logs.",
+            "Category": "Cryptographic Failures",
+            "Points": 20,
+            "Flag": "WCH{bashful_passwords}",
+            "Order": 6
+        },
+        {
+            "Id": 7,
+            "Title": "Step 7: RSA Decryption (Fermat)",
+            "Description": "Factor a weak RSA modulus and decrypt the final file.",
+            "Category": "Cryptographic Failures",
+            "Points": 30,
+            "Flag": "WCH{close_shaves_make_bad_primes}",
+            "Order": 7
+        }
+    ]
+}

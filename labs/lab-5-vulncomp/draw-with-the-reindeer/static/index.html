@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draw with the Reindeer!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+            font-family: monospace;
+        }
+        #drawing {
+            border: 1px solid #ddd;
+            width: 256px;
+            height: 256px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎄 Draw with the Reindeer! 🎄</h1>
+    <p>Welcome to Draw with the Reindeer! Use Turtle commands to guide the reindeer and create a drawing. Each command moves the reindeer on a 32x32 grid. Follow the instructions below to get started.</p>
+    
+    <h2>📜 Instructions</h2>
+    <ul>
+        <li>Commands:
+            <ul>
+                <li><strong>right [n]</strong>: Move the reindeer right by <em>n</em> steps (default: 1 step).</li>
+                <li><strong>left [n]</strong>: Move the reindeer left by <em>n</em> steps.</li>
+                <li><strong>up [n]</strong>: Move the reindeer up by <em>n</em> steps.</li>
+                <li><strong>down [n]</strong>: Move the reindeer down by <em>n</em> steps.</li>
+            </ul>
+        </li>
+        <li>Prefix a command with <strong>@</strong> to move the reindeer <em>without drawing</em>. For example: <code>@right 3</code>.</li>
+        <li>Separate commands with semicolons (<code>;</code>).</li>
+    </ul>
+    
+    <h2>💡 Examples</h2>
+    <ul>
+        <li><code>right 5; down 3; left 2; up 1</code>: Draws an L-shaped path.</li>
+        <li><code>right 4; @down 3; left 4</code>: Draws a horizontal line, moves down without drawing, then draws another horizontal line.</li>
+    </ul>
+    
+    <h2>🖍️ Enter Your Commands</h2>
+    <textarea id="turtleCode" placeholder="Enter your Turtle commands here..."></textarea>
+    <br />
+    <button onclick="sendCode()">🖼️ Render Drawing</button>
+    
+    <div id="output" style="margin-top: 20px;">
+        <h2>🎨 Your Drawing</h2>
+        <div id="drawing">
+            <p>Your drawing will appear here.</p>
+        </div>
+    </div>
+    
+    <script>
+        async function sendCode() {
+            const code = document.getElementById('turtleCode').value.trim();
+            if (!code) {
+                alert('Please enter some Turtle commands before rendering.');
+                return;
+            }
+
+            const payload = {
+                module: `{script: ${JSON.stringify(code)}}`
+            };
+
+            try {
+                const response = await fetch('/render', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                });
+
+                if (!response.ok) {
+                    throw new Error(await response.text());
+                }
+
+                const svg = await response.text();
+                document.getElementById('drawing').innerHTML = svg;
+            } catch (error) {
+                alert('Error rendering Turtle commands: ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html>

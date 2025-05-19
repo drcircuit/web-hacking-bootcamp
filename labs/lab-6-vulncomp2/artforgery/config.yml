@@ -1,0 +1,9 @@
+name: artforgery
+category: web
+points: 300
+description: |
+  The AI overlords have secured their art. Can you forge your way to the top?
+  <a href="http://artforgeryhack.norwayeast.azurecontainer.io:3000" target="_blank">artforgeryhack.norwayeast.azurecontainer.io:3000</a>
+  <!-- links -->
+static_files:
+  - ./snippet.md

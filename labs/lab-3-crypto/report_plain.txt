@@ -1,0 +1,3 @@
+You decrypted me with the power of primes too close for comfort.
+
+🏴 Final Flag: WCH{close_shaves_make_bad_primes}

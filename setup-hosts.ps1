@@ -7,7 +7,19 @@ $entries = @(
     "127.0.0.1 lab2.evilcorp.local",
     "127.0.0.1 lab3.evilcorp.local",
     "127.0.0.1 lab4.evilcorp.local",
-
+    "127.0.0.1 ASTComputers.evilcorp.local",
+    "127.0.0.1 acrosstheuniverse.evilcorp.local",
+    "127.0.0.1 adminjokes.evilcorp.local",
+    "127.0.0.1 artforgery.evilcorp.local",
+    "127.0.0.1 grinchcalculator.evilcorp.local",
+    "127.0.0.1 grinchserialkiller.evilcorp.local",
+    "127.0.0.1 impossible.evilcorp.local",
+    "127.0.0.1 receiptexifer.evilcorp.local",
+    "127.0.0.1 reindeer.evilcorp.local",
+    "127.0.0.1 santascodingworkshop.evilcorp.local",
+    "127.0.0.1 santasdisco.evilcorp.local",
+    "127.0.0.1 syringe.evilcorp.local",
+    "127.0.0.1 wishlistrenderer.evilcorp.local"
 )
 
 Write-Host ""

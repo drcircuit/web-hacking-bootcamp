@@ -1,0 +1,14 @@
+{
+  "name": "draw-with-the-reindeer",
+  "version": "1.0.0",
+  "description": "A fun turtle drawing game with a vulnerable backend.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "type": "module",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,20 @@
+🔐 Decrypting with OpenSSL:
+
+AES-128-ECB (no IV):
+    openssl enc -d -aes-128-ecb -K <hexkey> -in ciphertext.bin -out output.txt -nosalt -nopad
+
+AES-256-CBC (with IV):
+    openssl enc -d -aes-256-cbc -K <hexkey> -iv <hexiv> -in ciphertext.bin -out output.txt -nosalt
+
+🛠 Converting keys to hex:
+    xxd -p keyfile | tr -d '\n'
+
+Check your decrypted output with `cat` or `xxd`.
+
+To pad a string use printf
+
+( echo -n "<KEY>"; printf '\0%.0s' {1..16} ) > ckret.key
+this will create a string padded with null bytes, required to match the key length requirements of AES
+
+check encoding of the encrypted message, sometimes it is not plain binary.... b64 for instance...
+if so use base64 -d <file> > <file>.bin

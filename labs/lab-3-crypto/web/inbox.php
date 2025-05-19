@@ -1,5 +1,4 @@
 <?php
-// inbox.php
 require_once 'db.php';
 session_start();
 
@@ -11,8 +10,16 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 $username = $_SESSION['username'];
 
-// Send custom vault key header
-header("X-Vault-Key: " . base64_encode("vault_s3cr3t_key"));
+// Handle clearance code submission
+$challenge2_flag = null;
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['code'])) {
+    if ($_POST['code'] === 'ULTRA-7QZ49') {
+        $_SESSION['role'] = 'vault_console_operator';
+        $challenge2_flag = 'WCH{iv_got_the_power}';
+    } else {
+        $error = 'Incorrect clearance code.';
+    }
+}
 
 $db = get_db();
 $stmt = $db->prepare('SELECT subject, body FROM emails WHERE user_id = :user_id');
@@ -24,30 +31,32 @@ $results = $stmt->execute();
 <head>
     <meta charset="UTF-8">
     <title>Inbox - Evil Corp Mail</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
 <div class="container mt-5">
-    <h1 class="mb-4">Welcome, <?= htmlspecialchars($username) ?></h1>
+    <h1>Welcome, <?= htmlspecialchars($username) ?></h1>
     <h3>Inbox</h3>
     <?php while ($row = $results->fetchArray(SQLITE3_ASSOC)): ?>
-        <div class="card mb-3">
-            <div class="card-header">
-                <?= htmlspecialchars($row['subject']) ?>
-            </div>
-            <div class="card-body">
-                <pre><?= htmlspecialchars($row['body']) ?></pre>
-            </div>
+        <div>
+            <strong><?= htmlspecialchars($row['subject']) ?></strong><br>
+            <pre><?= htmlspecialchars($row['body']) ?></pre>
         </div>
     <?php endwhile; ?>
-    div class="card mb-3">
-        <div class="card-header">
-            <a href="vault_console.php">Vault Console</a>
+
+    <hr>
+    <h3>Enter Clearance Code</h3>
+    <form method="POST">
+        <input type="text" name="code" placeholder="Enter code">
+        <button type="submit">Submit</button>
+    </form>
+    <?php if (!empty($error)) echo "<p style='color:red;'>$error</p>"; ?>
+    <?php if ($challenge2_flag): ?>
+        <div style="margin-top: 20px;">
+            <h4>✅ Challenge 2 Complete</h4>
+            <p>Flag: <?= $challenge2_flag ?></p>
+            <p><a href="vault_console.php">Go to Vault Console</a></p>
         </div>
-        <div class="card-body">
-            <p>Access the vault console to manage your encrypted messages.<br>FLAG: WCH{decoded_aes_key_success}</p>
-        </div>
+    <?php endif; ?>
 </div>
 </body>
 </html>

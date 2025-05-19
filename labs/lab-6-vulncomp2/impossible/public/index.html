@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Challenge</title>
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f0f0f0;
+      background-image: url('bg.png'); /* Add your background image */
+      background-size: cover;
+    }
+    #button {
+      padding: 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      position: absolute;
+    }
+  </style>
+</head>
+<body>
+  <button id="button">Click me</button>
+  <script>
+    const button = document.getElementById('button');
+    let timeHash;
+    function moveButton(event) {
+      const x = Math.random() * (window.innerWidth - button.offsetWidth);
+      const y = Math.random() * (window.innerHeight - button.offsetHeight);
+      button.style.left = `${x}px`;
+      button.style.top = `${y}px`;
+    }
+
+    button.addEventListener('mouseover', moveButton);
+    button.addEventListener('touchstart', moveButton); // Add touchstart event for touch devices
+
+    button.addEventListener('click', async () => {
+      window.location.href = `/secret/${timeHash}`;
+    });
+
+    function pollTimeHash() {
+      fetch('/timehash')
+        .then(response => response.json())
+        .then(data => {
+          console.log(`Current hash: ${data.msg}`);
+          timeHash = data.msg.split(' ')[1];
+        });
+    }
+
+    setInterval(pollTimeHash, 10000);
+    pollTimeHash();
+
+    window.onresize = () => {
+      document.body.innerHTML = '';
+      console.clear();
+      console.log('NO CONSOLE FOR YOU!!');
+    };
+
+    (function() {
+      const devtools = { open: false };
+      const threshold = 160;
+
+      const emitEvent = (state) => {
+        const event = new CustomEvent('devtoolschange', { detail: state });
+        window.dispatchEvent(event);
+      };
+
+      const main = () => {
+        const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+        const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+        const orientation = widthThreshold ? 'vertical' : 'horizontal';
+        if (
+          !(heightThreshold && orientation === 'vertical') &&
+          !(widthThreshold && orientation === 'horizontal')
+        ) {
+          if (
+            window.Firebug &&
+            window.Firebug.chrome &&
+            window.Firebug.chrome.isInitialized
+          ) {
+            return emitEvent({ open: true, orientation });
+          }
+          return emitEvent({ open: false, orientation });
+        }
+        return emitEvent({ open: true, orientation });
+      };
+
+      main();
+      window.addEventListener('resize', main);
+      window.addEventListener('keydown', main);
+    })();
+  </script>
+</body>
+</html>

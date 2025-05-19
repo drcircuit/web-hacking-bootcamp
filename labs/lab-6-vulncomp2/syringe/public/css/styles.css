@@ -1,0 +1,8 @@
+.product-image-small {
+    width: 128px;
+    height: 128px;
+    object-fit: cover;
+  }
+body {
+    background-image: url("/img/bg.jpg");
+}

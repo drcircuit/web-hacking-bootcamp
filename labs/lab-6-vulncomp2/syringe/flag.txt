@@ -1,0 +1,1 @@
+flag{D0nt_Use_SQL_Injecti0n_4_W0rld_D0minati0n}

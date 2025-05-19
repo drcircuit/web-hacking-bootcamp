@@ -20,14 +20,22 @@ RUN apt-get update && apt-get install -y \
     vim \
     kali-tools-passwords \
     nano \
+    whatweb \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
-
+# install pycryptodome for RSA encryption
+RUN apt-get update && apt-get install -y python3-pycryptodome
 # Set working directory
 WORKDIR /root
 COPY custom-words.txt /root/custom-words.txt
 # copy scripts folder
 COPY scripts /root/scripts
+COPY hints /root/hints
+COPY .bashrc /root/.bashrc
+# append .bashrc to .profile for root
+RUN echo "if [ -f ~/.bashrc ]; then" >> /root/.profile && \
+    echo "    . ~/.bashrc" >> /root/.profile && \
+    echo "fi" >> /root/.profile
 # Setup shell
 RUN apt-get update && apt-get install -y bash-completion
 # Configure bash for a better shell experience

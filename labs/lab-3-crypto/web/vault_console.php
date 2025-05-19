@@ -1,60 +1,46 @@
 <?php
-// vault_console.php
 session_start();
 
 function base64url_decode($data) {
     return base64_decode(strtr($data, '-_', '+/'));
 }
 
-function verify_none_jwt($token) {
+function parse_jwt($token) {
     $parts = explode('.', $token);
-    if (count($parts) !== 3) return false;  // Expecting 3 parts even for 'none'
-
-    $header = json_decode(base64url_decode($parts[0]), true);
+    if (count($parts) !== 3) return null;
     $payload = json_decode(base64url_decode($parts[1]), true);
+    return $payload;
+}
 
-    if (isset($header['alg']) && $header['alg'] === 'none') {
-        return $payload;
-    }
-    return false;
+if ($_SESSION['role'] !== 'vault_console_operator') {
+    echo "🔐 Clearance required. Return to inbox.";
+    exit;
 }
 
 $flag = null;
 $error = null;
 
-if (isset($_COOKIE['vault_token'])) {
-    $payload = verify_none_jwt($_COOKIE['vault_token']);
+if (isset($_COOKIE['token'])) {
+    $payload = parse_jwt($_COOKIE['token']);
     if ($payload && ($payload['level'] ?? '') === 'ultra') {
-        $flag = 'WCH{jwt_alg_none_claim_check}';
-        ?>
-        <a href="/encrypted/leak_ecb.enc" download>Download Vault Message, see if you can ATTACK this one...</a>
-        <?php
+        $flag = 'WCH{n0ne_is_too_many}';
     } else {
-        $error = 'Vault access denied. Only ultra-level sysadmins may proceed.';
+        $error = '❌ Only ultra special roles accepted.';
     }
 } else {
-    $error = 'Missing vault_token cookie.';
+    $error = '❌ Missing JWT.';
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Vault Console</title>
-    <link rel="stylesheet" href="/css/styles.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="container mt-5">
-<h1>🔐 EvilCorp Vault Console</h1>
-
+<head><meta charset="UTF-8"><title>Vault Console</title></head>
+<body>
+<h1>Vault Console</h1>
 <?php if ($flag): ?>
-    <div class="alert alert-success mt-4">
-        <strong>Access granted:</strong> <?= $flag ?>
-    </div>
+    <h3>✅ Challenge 3 Complete</h3>
+    <p>Flag: <?= $flag ?></p>
 <?php else: ?>
-    <div class="alert alert-danger mt-4">
-        <?= htmlspecialchars($error) ?>
-    </div>
+    <p><?= $error ?></p>
 <?php endif; ?>
 </body>
 </html>

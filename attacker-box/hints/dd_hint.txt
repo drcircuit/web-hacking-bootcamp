@@ -1,0 +1,9 @@
+🧰 Splitting a binary file into IV and ciphertext with `dd`:
+
+To extract the first 16 bytes as IV:
+    dd if=input.bin of=iv.bin bs=1 count=16
+
+To extract the remainder as ciphertext:
+    dd if=input.bin of=ciphertext.bin bs=1 skip=16
+
+Tip: You can check file sizes with `stat -c %s filename`.
