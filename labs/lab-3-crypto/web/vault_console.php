@@ -25,7 +25,7 @@ if (isset($_COOKIE['token'])) {
     if ($payload && ($payload['level'] ?? '') === 'ultra') {
         $flag = 'WCH{n0ne_is_too_many}';
     } else {
-        $error = '❌ Only ultra special roles accepted.';
+        $error = '❌ Only ultra special levels accepted.';
     }
 } else {
     $error = '❌ Missing JWT.';
@@ -39,6 +39,7 @@ if (isset($_COOKIE['token'])) {
 <?php if ($flag): ?>
     <h3>✅ Challenge 3 Complete</h3>
     <p>Flag: <?= $flag ?></p>
+    <p>More recon for next step...
 <?php else: ?>
     <p><?= $error ?></p>
 <?php endif; ?>

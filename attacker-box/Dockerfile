@@ -67,5 +67,7 @@ RUN gunzip -k /usr/share/wordlists/rockyou.txt.gz && \
 
 # install sqlite3 client
 RUN apt install sqlite3 wget xxd -y
+# copy helper scripts
+COPY scripts /root/scripts
 # Default command to start a login shell
 CMD ["/bin/bash", "-l"]

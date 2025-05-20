@@ -63,6 +63,9 @@ EXPOSE 80 22
 RUN apt-get update && apt-get install -y python3-pip && pip3 install pycryptodome
 # Copy encryption script and plaintext flag
 COPY scripts/encrypt_rsa.py /scripts/encrypt_rsa.py
+COPY scripts/gen_blob.py /scripts/gen_blob.py
+RUN chmod +x /scripts/encrypt_rsa.py
+RUN chmod +x /scripts/gen_blob.py
 COPY report_plain.txt /tmp/report_plain.txt
 # Run encryption and cleanup
 RUN python3 /scripts/encrypt_rsa.py && rm -f /tmp/report_plain.txt
