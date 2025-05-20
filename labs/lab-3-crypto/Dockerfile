@@ -12,10 +12,8 @@ RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf && \
     mkdir -p /var/run/sshd && \
     a2enmod rewrite
 
-RUN useradd -m thanos && \
-    echo 'thanos:$6$xKZ5EZA0vqjr5ACZ$jG9yftjy2NtP.iJThuHM1LkIhst3XEC2mRfp3GNdtQ9JMZhDvZL4/Y6l5Az5IL5SNxKkK1.zG6wBbRDAvZF240' >> /etc/shadow && \
-    echo "thanos:x:1000:1000::/home/thanos:/bin/bash" >> /etc/passwd
-
+RUN useradd -m -s /bin/bash thanos && \
+    echo "thanos:purple123" | chpasswd
 
 COPY web/ /var/www/html/
 COPY thanos.bashrc /home/thanos/.bashrc

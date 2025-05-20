@@ -1,0 +1,11 @@
+{
+    "id": 5,
+    "title": "Insecure Components - CTF style",
+    "Category" : "Insecure Components",
+    "Description" : "Find the flag in the CTF challenge. Based on CVEs",
+    "Challenges" :[
+        {
+            
+        }
+    ]
+}
