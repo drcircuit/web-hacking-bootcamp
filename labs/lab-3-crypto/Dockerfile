@@ -69,4 +69,12 @@ COPY report_plain.txt /tmp/report_plain.txt
 RUN python3 /scripts/encrypt_rsa.py && rm -f /tmp/report_plain.txt
 # remove plaintext report_plain.txt
 RUN rm -f /tmp/report_plain.txt
+
+# give thanos owership of /home/thanos/report.txt.enc
+RUN chown thanos:thanos /home/thanos/report.txt.enc
+# make thanos sudoer
+RUN echo "thanos ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+# set permissions for thanos home dir
+RUN chown -R thanos:thanos /home/thanos
+# give thanos root privileges
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
